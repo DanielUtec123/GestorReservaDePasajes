@@ -1,0 +1,4 @@
+id, destino, costo
+1, Peru, 200
+2, Brazil, 300
+3, Paraguay, 500

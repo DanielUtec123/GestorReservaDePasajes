@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/form/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+</head>
+<body style="background-color:#0769ad;">
+<div class="container">
+
+    <h1 class="well row text-center"><a href="/pasajes">Ver todos los pasajes</a></h1>
+    <h1 class="well row text-center"><a href="/precios">Ver todos los precios</a></h1>
+    <h1 class="well row text-center"><a href="/precio">Añadir un nuevo destino</a></h1>
+	<div class="col-lg-12 well">
+	<div class="row text-center">
+
+    <form action="/do_search" method="get">
+					<div class="col-sm-12">
+					<div class="form-group align-middle">
+						<label>Buscador de pasajes</label>
+						<input name="dni" type="text" placeholder="Ingrese su número de DNI" class="form-control">
+					</div>
+
+
+					<button type="submit" class="btn btn-lg btn-info text-center">Buscar</button>
+					</div>
+				</form>
+        </div>
+	</div>
+    <br>
+    <br>
+    <div class="container"></div>
+    <h1 class="well row text-center">Reserva de pasajes</h1>
+	<div class="col-lg-12 well">
+	<div class="row">
+
+
+				<form action="/do_reserva" method="post">
+					<div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label>Nombre</label>
+								<input type="text" name="nombre" placeholder="Ingresa tu nombre" class="form-control">
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>Apellido</label>
+								<input type="text" name="apellido" placeholder="Ingresa tu apellido" class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label>Destino</label>
+								<select class="form-control" name="destino" id="FormControl">
+                                    {% for oferta in ofertas %}
+                                        <option id="val{{oferta[0]}}" value="{{oferta[0]}}">{{oferta[1]}}</option>
+                                    {% endfor %}
+                                 </select>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label>Fecha</label>
+								 <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
+							</div>
+						</div>
+
+                        <div class="row">
+
+							<div class="col-sm-6 form-group">
+								<label>Precio</label>
+                                <label id="price"></label>
+							</div>
+						</div>
+
+                    <div class="form-group">
+						<label>DNI</label>
+						<input type="text" name="dni" placeholder="Ingresa tu dni" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label>Correo</label>
+						<input type="text" name="correo" placeholder="Ingresa tu correo" class="form-control">
+					</div>
+
+
+					<button type="submit" class="btn btn-lg btn-info">Reserva</button>
+					</div>
+				</form>
+				</div>
+	</div>
+	</div>
+
+</body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+
+    id = {
+    {% for oferta in ofertas %}
+           {{oferta[0]}}:{{oferta[2]}},
+    {% endfor %}
+    }
+
+
+
+
+    $( "#FormControl" ).change(function() {
+        $('#price').html(id[$('#FormControl').val()] + ' PEN');
+    });
+
+    $(document).ready(function(){
+        $('#price').html(id[$('#FormControl').val()] + ' PEN');
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>
+
+</html>

@@ -1,0 +1,1 @@
+id, dni_cliente, fecha, id_pasaje, nombre, apellido, correo
